@@ -11,6 +11,7 @@ services:
       - /home/desafio-back/node_modules
 
   mongo:
+    container_name: mongo_db
     image: mongo
     restart: always
     ports:
