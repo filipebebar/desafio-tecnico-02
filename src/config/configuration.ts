@@ -15,10 +15,4 @@ export default () => ({
   development:
     ['dev', 'development', 'qa'].includes(process.env.NODE_ENV) ||
     ['dev', 'development', 'qa'].includes(process.env.ENVIRONMENT_MODE),
-
-  mongoDB: {
-    port: process.env.MONGO_DB_PORT,
-    user: process.env.MONGO_DB_ROOT_USERNAME,
-    password: process.env.MONGO_DB_ROOT_PASSWORD,
-  },
 });

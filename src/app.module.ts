@@ -7,11 +7,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import configuration from './config/configuration';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(`mongodb://localhost:${configuration().mongoDB.port}/test`),
-    AccountsModule,
-    TransactionsModule,
-  ],
+  imports: [MongooseModule.forRoot(`mongodb://localhost:27017`), AccountsModule, TransactionsModule],
   controllers: [AppController],
   providers: [AppService],
 })
