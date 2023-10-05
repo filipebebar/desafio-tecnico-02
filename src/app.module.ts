@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountsModule } from './accounts/accounts.module';
 import { TransactionsModule } from './transactions/transactions.module';
-import configuration from './config/configuration';
 
 @Module({
   imports: [MongooseModule.forRoot(`mongodb://localhost:27017`), AccountsModule, TransactionsModule],
