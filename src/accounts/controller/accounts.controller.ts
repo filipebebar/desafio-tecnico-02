@@ -9,17 +9,23 @@ import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
-  @Post(':accountID')
+  @Post(':accountId')
   @ApiOperation({ summary: 'Cria uma nova conta' })
   @TemplateApiException(() => [ExistsAccountsException])
-  create(@Param('accountID') accountID: string) {
-    return this.accountsService.create(accountID);
+  create(@Param('accountId') accountId: string) {
+    return this.accountsService.create(accountId, true);
   }
 
   @Get(':accountId')
   @ApiOperation({ summary: 'Pega uma conta existente referente ao número de conta informado' })
   @TemplateApiException(() => [AccountNotFound])
   findOne(@Param('accountId') accountId: string) {
-    return this.accountsService.findOneByAccountId(accountId);
+    return this.accountsService.findOneByAccountId(accountId, false);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Pega tudo' })
+  getAll() {
+    return this.accountsService.getAll();
   }
 }
