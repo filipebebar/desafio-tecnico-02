@@ -4,7 +4,7 @@ import * as path from 'path';
 export const envPath = (file: string) => path.join(__dirname, file);
 
 const envs = {
-  dev: envPath('../../src/config/envs/.dev.env'),
+  dev: envPath('./envs/.dev.env'),
 };
 
 dotenv.config({ path: envs[process.env.NODE_ENV || 'dev'] });
