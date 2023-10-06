@@ -1,4 +1,9 @@
 export class AccountDto {
-  accountId: string;
-  balance: number;
+  accountId: String;
+  balance: Number;
+}
+
+export interface IAccount {
+  accountId: String;
+  balance: Number;
 }

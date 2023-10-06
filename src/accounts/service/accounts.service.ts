@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { AccountDto } from '../dto/account.dto';
+import { AccountDto, IAccount } from '../dto/account.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
@@ -36,15 +36,15 @@ export class AccountsService {
     }
 
     if (recoveredAccount && !creating) {
-      return this.mountWantedRecoveredData(recoveredAccount);
+      return await this.mountWantedRecoveredData(recoveredAccount);
     }
-    throw new AccountNotFound();
+    return new AccountNotFound();
   }
 
-  mountWantedRecoveredData(recoveredAccount) {
+  async mountWantedRecoveredData(recoveredAccount: any): Promise<IAccount> {
     return {
-      conta_id: recoveredAccount.accountId,
-      saldo: recoveredAccount.balance,
+      accountId: recoveredAccount.accountId,
+      balance: recoveredAccount.balance,
     };
   }
 
