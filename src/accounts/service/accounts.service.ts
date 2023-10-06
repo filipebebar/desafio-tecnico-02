@@ -3,10 +3,11 @@ import { AccountDto } from '../dto/account.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
+import { Account } from '../../schemas/account.schema';
 
 @Injectable()
 export class AccountsService {
-  constructor(@InjectModel('Account') private readonly accountModel: Model<AccountDto>) {}
+  constructor(@InjectModel(Account.name) private accountModel: Model<Account>) {}
 
   async create(accountId: string, creating: boolean): Promise<HttpStatus> {
     const recoveredAccount = await this.findOneByAccountId(accountId, creating);
@@ -28,7 +29,7 @@ export class AccountsService {
     }
   }
 
-  async findOneByAccountId(accountId: string, creating: boolean): Promise<{} | AccountDto> {
+  async findOneByAccountId(accountId: string, creating: boolean) {
     const recoveredAccount = await this.accountModel.findOne({ accountId }).exec();
     if (!recoveredAccount && creating) {
       return recoveredAccount;
@@ -40,13 +41,14 @@ export class AccountsService {
     throw new AccountNotFound();
   }
 
-  mountWantedRecoveredData(recoveredAccount: AccountDto) {
+  mountWantedRecoveredData(recoveredAccount) {
     return {
       conta_id: recoveredAccount.accountId,
       saldo: recoveredAccount.balance,
     };
   }
 
+  //TODO: retirar antes do ultimo commit
   async getAll() {
     return await this.accountModel.find().exec();
   }
