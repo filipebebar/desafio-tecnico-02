@@ -14,7 +14,7 @@ export class TransactionsController {
   @ApiOperation({ summary: 'Realiza operações de pagamento' })
   @TemplateApiException(() => [])
   create(@Body() createTransactionDto: CreateTransactionDto): Promise<CreateTransactionResponse | any> {
-    return this.transactionsService.create(createTransactionDto);
+    return this.transactionsService.createTransaction(createTransactionDto);
   }
 
   @Get()

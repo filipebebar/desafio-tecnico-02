@@ -14,7 +14,7 @@ export class AccountsController {
   @ApiOperation({ summary: 'Cria uma nova conta' })
   @TemplateApiException(() => [ExistsAccountsException])
   create(@Param('accountId') accountId: string): Promise<HttpStatus> {
-    return this.accountsService.create(accountId, true);
+    return this.accountsService.createAccount(accountId, true);
   }
 
   @Get(':accountId')

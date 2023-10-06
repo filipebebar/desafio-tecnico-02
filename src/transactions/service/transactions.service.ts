@@ -15,7 +15,7 @@ export class TransactionsService {
     @InjectModel(Transaction.name) private transactionModel: Model<Transaction>,
   ) {}
 
-  async create(createTransaction: ICreateTransaction): Promise<any> {
+  async createTransaction(createTransaction: ICreateTransaction): Promise<any> {
     const account = await this.getAccountInfo(createTransaction.conta_id);
     const calculateAmount = this.makeOperationValueAndTaxValue(createTransaction);
     return this.removeValueFromAccountBalance(account, calculateAmount, createTransaction.forma_pagamento);
@@ -29,7 +29,7 @@ export class TransactionsService {
     }
   }
 
-  makeOperationValueAndTaxValue(createTransaction) {
+  makeOperationValueAndTaxValue(createTransaction: any) {
     let taxPercentage: number;
 
     switch (createTransaction.forma_pagamento) {
