@@ -1,11 +1,11 @@
-import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type AccountDocument = HydratedDocument<Account>;
 
 @Schema()
 export class Account {
-  @Prop()
+  @Prop({ required: true, unique: true })
   accountId: String;
 
   @Prop()

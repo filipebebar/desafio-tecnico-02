@@ -12,3 +12,9 @@ export class AccountNotFound extends MongoDBException {
     super(ERROS.MONGO_DB.NOT_FOUND_EXCEPTION, ERROS.MONGO_DB.NOT_FOUND_EXCEPTION.statusCode);
   }
 }
+
+export class ExceedsAvailableValue extends MongoDBException {
+  constructor() {
+    super(ERROS.MONGO_DB.EXCEEDS_AVAILABLE_VALUE, ERROS.MONGO_DB.EXCEEDS_AVAILABLE_VALUE.statusCode);
+  }
+}

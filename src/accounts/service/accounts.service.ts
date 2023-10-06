@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { AccountDto, IAccount } from '../dto/account.dto';
+import { AccountDto } from '../dto/account.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
+import { AccountNotFound, ExceedsAvailableValue, ExistsAccountsException } from '../exception/accounts.exception';
 import { Account } from '../../schemas/account.schema';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class AccountsService {
     }
   }
 
-  async findOneByAccountId(accountId: string, creating: boolean) {
+  async findOneByAccountId(accountId: String, creating: boolean) {
     const recoveredAccount = await this.accountModel.findOne({ accountId }).exec();
     if (!recoveredAccount && creating) {
       return recoveredAccount;
@@ -41,11 +41,24 @@ export class AccountsService {
     return new AccountNotFound();
   }
 
-  async mountWantedRecoveredData(recoveredAccount: any): Promise<IAccount> {
+  async mountWantedRecoveredData(recoveredAccount: AccountDto): Promise<AccountDto> {
     return {
       accountId: recoveredAccount.accountId,
       balance: recoveredAccount.balance,
     };
+  }
+
+  async updateAccountBalance(accountId: string, newBalance: number): Promise<Account> {
+    const account = await this.accountModel.findOne({ accountId }).exec();
+
+    account.balance = newBalance;
+
+    try {
+      await account.save();
+      return await this.mountWantedRecoveredData(account);
+    } catch (error) {
+      throw new ExceedsAvailableValue();
+    }
   }
 
   //TODO: retirar antes do ultimo commit

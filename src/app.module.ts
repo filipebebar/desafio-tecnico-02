@@ -6,7 +6,7 @@ import { AccountsModule } from './accounts/accounts.module';
 import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [MongooseModule.forRoot(`mongodb://localhost:27017/local`), AccountsModule, TransactionsModule],
+  imports: [MongooseModule.forRoot(`mongodb://host.docker.internal:27017/local`), AccountsModule, TransactionsModule],
   controllers: [AppController],
   providers: [AppService],
 })

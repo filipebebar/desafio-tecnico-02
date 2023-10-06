@@ -3,7 +3,7 @@ import { AccountsService } from '../service/accounts.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TemplateApiException } from '../../utils/swagger/template-api-exception';
 import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
-import { IAccount } from '../dto/account.dto';
+import { AccountResponse } from '../dto/account.dto';
 
 @ApiTags('conta')
 @Controller('conta')
@@ -20,7 +20,7 @@ export class AccountsController {
   @Get(':accountId')
   @ApiOperation({ summary: 'Pega uma conta existente referente ao número de conta informado' })
   @TemplateApiException(() => [AccountNotFound])
-  findOne(@Param('accountId') accountId: string): Promise<AccountNotFound | IAccount> {
+  findOne(@Param('accountId') accountId: string): Promise<AccountNotFound | AccountResponse> {
     return this.accountsService.findOneByAccountId(accountId, false);
   }
 
