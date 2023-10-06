@@ -1,4 +1,3 @@
-import { ExistsAccountsException } from '../../accounts/exception/accounts.exception';
 import { HttpStatus } from '@nestjs/common';
 
 export const ERROS = {
@@ -6,7 +5,7 @@ export const ERROS = {
     EXISTS_ACCOUNT_EXCEPTION: {
       code: 1000,
       message: 'Já existe uma acconta com esse número!',
-      statusCode: HttpStatus.BAD_REQUEST,
+      statusCode: HttpStatus.CONFLICT,
     },
     NOT_FOUND_EXCEPTION: {
       code: 1001,

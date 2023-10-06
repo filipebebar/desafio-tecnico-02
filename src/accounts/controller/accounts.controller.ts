@@ -10,22 +10,16 @@ export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Post(':accountID')
-  @ApiOperation({ summary: 'Salva a conta' })
+  @ApiOperation({ summary: 'Cria uma nova conta' })
   @TemplateApiException(() => [ExistsAccountsException])
   create(@Param('accountID') accountID: string) {
     return this.accountsService.create(accountID);
   }
 
-  @Get(':accountID')
-  @ApiOperation({ summary: 'Pega uma conta referente ao id' })
+  @Get(':accountId')
+  @ApiOperation({ summary: 'Pega uma conta existente referente ao número de conta informado' })
   @TemplateApiException(() => [AccountNotFound])
-  findOne(@Param('accountID') accountID: string) {
-    return this.accountsService.findOneByAccountId(accountID);
-  }
-
-  @Get()
-  @ApiOperation({ summary: 'Pega tudo' })
-  getAll() {
-    return this.accountsService.getAll();
+  findOne(@Param('accountId') accountId: string) {
+    return this.accountsService.findOneByAccountId(accountId);
   }
 }
