@@ -23,10 +23,4 @@ export class AccountsController {
   findOne(@Param('accountId') accountId: string): Promise<AccountNotFound | AccountResponse> {
     return this.accountsService.findOneByAccountId(accountId, false);
   }
-
-  @Get()
-  @ApiOperation({ summary: 'Pega tudo' })
-  getAll() {
-    return this.accountsService.getAll();
-  }
 }

@@ -60,9 +60,4 @@ export class AccountsService {
       throw new Error(error);
     }
   }
-
-  //TODO: retirar antes do ultimo commit
-  async getAll() {
-    return await this.accountModel.find().exec();
-  }
 }

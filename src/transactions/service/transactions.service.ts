@@ -70,9 +70,4 @@ export class TransactionsService {
       throw new Error(e);
     }
   }
-
-  //TODO: retirar antes do ultimo commit
-  async getAll() {
-    return await this.transactionModel.find().exec();
-  }
 }
