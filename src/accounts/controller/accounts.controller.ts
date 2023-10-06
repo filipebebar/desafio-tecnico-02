@@ -1,9 +1,9 @@
-import { Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { AccountsService } from '../service/accounts.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TemplateApiException } from '../../utils/swagger/template-api-exception';
 import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
-import { AccountResponse } from '../dto/account.dto';
+import { AccountRequest, AccountResponse } from '../dto/account.dto';
 
 @ApiTags('conta')
 @Controller('conta')
@@ -11,10 +11,11 @@ export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Post(':accountId')
+  @ApiBody({ type: AccountRequest })
   @ApiOperation({ summary: 'Cria uma nova conta' })
   @TemplateApiException(() => [ExistsAccountsException])
-  create(@Param('accountId') accountId: string): Promise<HttpStatus> {
-    return this.accountsService.createAccount(accountId, true);
+  create(@Body() accountRequest: AccountRequest): Promise<HttpStatus> {
+    return this.accountsService.createAccount(accountRequest, true);
   }
 
   @Get(':accountId')

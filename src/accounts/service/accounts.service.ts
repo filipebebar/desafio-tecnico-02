@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { AccountDto } from '../dto/account.dto';
+import { AccountDto, AccountRequest } from '../dto/account.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AccountNotFound, ExistsAccountsException } from '../exception/accounts.exception';
@@ -9,16 +9,16 @@ import { Account } from '../../schemas/account.schema';
 export class AccountsService {
   constructor(@InjectModel(Account.name) private accountModel: Model<Account>) {}
 
-  async createAccount(accountId: string, creating: boolean): Promise<HttpStatus> {
-    const recoveredAccount = await this.findOneByAccountId(accountId, creating);
+  async createAccount(accountRequest: AccountRequest, creating: boolean): Promise<HttpStatus> {
+    const recoveredAccount = await this.findOneByAccountId(accountRequest.accountId, creating);
     if (recoveredAccount || recoveredAccount != null) {
       throw new ExistsAccountsException();
     }
     const newAccount = new AccountDto();
     const startValue = 500;
 
-    newAccount.accountId = accountId;
-    newAccount.balance = startValue;
+    newAccount.accountId = accountRequest.accountId;
+    newAccount.balance = startValue + accountRequest.value;
 
     try {
       const createdAccount = new this.accountModel(newAccount);

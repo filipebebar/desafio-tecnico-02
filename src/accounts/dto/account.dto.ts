@@ -1,9 +1,7 @@
 import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 
 export class AccountDto {
-  @ApiProperty()
   accountId: String;
-  @ApiProperty()
   balance: Number;
 }
 
@@ -14,7 +12,9 @@ export class AccountResponse {
   balance: Number;
 }
 
-export interface IAccount {
+export class AccountRequest {
+  @ApiProperty()
   accountId: String;
-  balance: Number;
+  @ApiProperty()
+  value: number;
 }

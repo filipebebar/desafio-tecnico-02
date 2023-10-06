@@ -39,3 +39,7 @@ $ yarn run test
 # test coverage
 $ yarn run test:cov
 ```
+
+Observações, encontrei bastante conflitos e problemas ao utilizara o mongoDB, principalmente nos testes, 
+no qual a dificultade de mockar os models ficou bem aparente, tentei utilizar o o package @mockingoose mas sem sucesso, 
+mas acredito que posso melhorar e desenvolver melhor, vindo a utilizar mais o mongodb 
