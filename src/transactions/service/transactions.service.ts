@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { EPaymentOrder, ICreateTransaction, TransactionDto } from '../dto/create-transaction.dto';
 import { AccountsService } from '../../accounts/service/accounts.service';
-import { AccountNotFound } from '../exception/transactions.exception';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Transaction } from '../../schemas/transactions.schema';
 import { ExceedsAvailableValue } from '../../accounts/exception/accounts.exception';
 import { AccountDto } from '../../accounts/dto/account.dto';
+import { AccountNotFound, InvalidPaymentForm } from '../exception/transactions.exception';
 
 @Injectable()
 export class TransactionsService {
@@ -43,7 +43,7 @@ export class TransactionsService {
         taxPercentage = 0.0;
         break;
       default:
-        throw new Error('Forma de pagamento inválida');
+        throw new InvalidPaymentForm();
     }
     const paymentValue = createTransaction.valor;
 

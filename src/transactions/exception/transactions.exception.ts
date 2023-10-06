@@ -6,3 +6,8 @@ export class AccountNotFound extends MongoDBException {
     super(ERROS.MONGO_DB.NOT_FOUND_EXCEPTION, ERROS.MONGO_DB.NOT_FOUND_EXCEPTION.statusCode);
   }
 }
+export class InvalidPaymentForm extends MongoDBException {
+  constructor() {
+    super(ERROS.MONGO_DB.INVALID_PAYMENT_FORM, ERROS.MONGO_DB.INVALID_PAYMENT_FORM.statusCode);
+  }
+}

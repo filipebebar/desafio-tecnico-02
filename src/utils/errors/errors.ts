@@ -17,5 +17,10 @@ export const ERROS = {
       message: 'Transação ultrapasa saldo da conta!',
       statusCode: HttpStatus.NOT_FOUND,
     },
+    INVALID_PAYMENT_FORM: {
+      code: 1003,
+      message: 'Forma de pagamento inválida!!',
+      statusCode: HttpStatus.NOT_ACCEPTABLE,
+    },
   },
 };
