@@ -17,9 +17,6 @@ export class TransactionDto {
   accountId: String;
   paymentForm: EPaymentOrder;
   value: Number;
-  account: {
-    accountId: String;
-  };
 }
 
 export class CreateTransactionResponse {

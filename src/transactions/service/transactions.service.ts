@@ -50,7 +50,7 @@ export class TransactionsService {
     return paymentValue + paymentValue * taxPercentage;
   }
 
-  async removeValueFromAccountBalance(account, calculateAmount, paymentForm) {
+  async removeValueFromAccountBalance(account: any, calculateAmount: number, paymentForm: any): Promise<AccountDto> {
     const newBalance = account.balance - calculateAmount;
     if (newBalance < 0) {
       throw new ExceedsAvailableValue();
@@ -61,12 +61,14 @@ export class TransactionsService {
     newTransaction.paymentForm = paymentForm;
 
     const createdTransaction = new this.transactionModel(newTransaction);
-    const teste = Promise.all([
-      await this.accountsService.updateAccountBalance(account.accountId, newBalance),
-      await createdTransaction.save(),
-    ]);
+    try {
+      const updatedAccount = await this.accountsService.updateAccountBalance(account.accountId, newBalance);
+      await createdTransaction.save();
 
-    return teste;
+      return updatedAccount;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   //TODO: retirar antes do ultimo commit
