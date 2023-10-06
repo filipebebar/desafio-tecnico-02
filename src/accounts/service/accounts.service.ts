@@ -57,7 +57,7 @@ export class AccountsService {
       await account.save();
       return await this.mountWantedRecoveredData(account);
     } catch (error) {
-      throw new ExceedsAvailableValue();
+      throw new Error(error);
     }
   }
 

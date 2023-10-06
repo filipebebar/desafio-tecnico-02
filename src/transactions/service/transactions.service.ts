@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Transaction } from '../../schemas/transactions.schema';
 import { ExceedsAvailableValue } from '../../accounts/exception/accounts.exception';
+import { AccountDto } from '../../accounts/dto/account.dto';
 
 @Injectable()
 export class TransactionsService {
@@ -14,13 +15,13 @@ export class TransactionsService {
     @InjectModel(Transaction.name) private transactionModel: Model<Transaction>,
   ) {}
 
-  async create(createTransaction: ICreateTransaction) {
+  async create(createTransaction: ICreateTransaction): Promise<any> {
     const account = await this.getAccountInfo(createTransaction.conta_id);
     const calculateAmount = this.makeOperationValueAndTaxValue(createTransaction);
     return this.removeValueFromAccountBalance(account, calculateAmount, createTransaction.forma_pagamento);
   }
 
-  async getAccountInfo(conta_id: String) {
+  async getAccountInfo(conta_id: String): Promise<AccountDto | AccountNotFound> {
     try {
       return await this.accountsService.findOneByAccountId(conta_id, false);
     } catch (e) {
@@ -52,7 +53,7 @@ export class TransactionsService {
   async removeValueFromAccountBalance(account, calculateAmount, paymentForm) {
     const newBalance = account.balance - calculateAmount;
     if (newBalance < 0) {
-      throw new Error('valor ultrapassa saldo da conta');
+      throw new ExceedsAvailableValue();
     }
     const newTransaction = new TransactionDto();
     newTransaction.accountId = account.accountId;
@@ -60,14 +61,12 @@ export class TransactionsService {
     newTransaction.paymentForm = paymentForm;
 
     const createdTransaction = new this.transactionModel(newTransaction);
-    try {
-      return Promise.all([
-        await this.accountsService.updateAccountBalance(account.accountId, newBalance),
-        await createdTransaction.save(),
-      ]);
-    } catch (e) {
-      throw new ExceedsAvailableValue();
-    }
+    const teste = Promise.all([
+      await this.accountsService.updateAccountBalance(account.accountId, newBalance),
+      await createdTransaction.save(),
+    ]);
+
+    return teste;
   }
 
   //TODO: retirar antes do ultimo commit
