@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TransactionsService } from './transactions.service';
 import { AccountsService } from '../../accounts/service/accounts.service';
-import { Model } from 'mongoose';
 import { Transaction } from '../../schemas/transactions.schema';
 import { ExceedsAvailableValue } from '../../accounts/exception/accounts.exception';
 import { AccountNotFound, InvalidPaymentForm } from '../exception/transactions.exception';
@@ -11,7 +10,6 @@ import { EPaymentOrder, ICreateTransaction } from '../dto/create-transaction.dto
 describe('TransactionsService', () => {
   let transactionsService: TransactionsService;
   let accountsService: AccountsService;
-  let transactionModel: Model<Transaction>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -38,7 +36,6 @@ describe('TransactionsService', () => {
 
     transactionsService = module.get<TransactionsService>(TransactionsService);
     accountsService = module.get<AccountsService>(AccountsService);
-    transactionModel = module.get<Model<Transaction>>(getModelToken(Transaction.name));
   });
 
   it('should be defined', () => {
