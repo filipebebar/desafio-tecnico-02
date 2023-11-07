@@ -1,6 +1,6 @@
 ## Description
 
-Aplicação implementada e voltada para o desafio técnico realizado pela Objective
+Aplicação implementada e voltada para o desafio técnico
 
 A aplicação foi pensada para rodar em docker, no qual a aplicação api e banco estão dentro do mesmo container e já em comunicação.
 Houve problemas ao rodar no windows tendo que apontar o host dentro do p'roprio container
